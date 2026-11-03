@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="my">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="NEXORA Digital Hub — digital design, short video, website and Telegram bot services.">
+<title>NEXORA Digital Hub</title>
+<style>
+:root {
+  --site-primary: #102b4e;
+  --site-on-primary: #ffffff;
+  --site-secondary: #12b8ad;
+  --site-on-secondary: #062b2b;
+  --site-background: #071426;
+  --site-on-background: #f4f8ff;
+  --site-font-body: "Noto Sans Myanmar", "Myanmar Text", system-ui, sans-serif;
+  --site-font-heading: "Noto Sans Myanmar", "Myanmar Text", system-ui, sans-serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  --surface: #0d2038;
+  --surface-2: #132b47;
+  --muted: #afc0d5;
+  --line: rgba(190, 215, 245, .16);
+  --accent: #62e3d5;
+  --warning: #f8d48a;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--site-background); color: var(--site-on-background); font-family: var(--site-font-body); }
+#app { min-height: 100vh; width: 100%; border-radius: 0; color: var(--site-on-background); background-color: var(--site-background); overflow: hidden; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; }
+.wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+header { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--site-background) 90%, transparent); backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+.nav { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.brand { display: flex; align-items: center; gap: 11px; font-family: var(--site-font-heading); font-weight: 900; letter-spacing: .04em; }
+.logo { width: 38px; height: 38px; display: grid; place-items: center; border-radius: calc(12px * var(--site-radius-scale)); color: var(--site-on-secondary); background: var(--site-secondary); font-weight: 1000; }
+.navlinks { display: flex; align-items: center; gap: 24px; color: var(--muted); font-size: 14px; }
+.navlinks a:hover { color: var(--accent); }
+.btn { display: inline-flex; justify-content: center; align-items: center; gap: 8px; border: 0; border-radius: calc(12px * var(--site-radius-scale)); padding: calc(13px * var(--site-spacing-scale)) calc(18px * var(--site-spacing-scale)); background: var(--site-secondary); color: var(--site-on-secondary); font-weight: 800; cursor: pointer; transition: transform .18s ease, filter .18s ease; }
+.btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.btn.secondary { background: var(--surface-2); color: var(--site-on-background); border: 1px solid var(--line); }
+.hero { position: relative; padding: clamp(70px, 10vw, 120px) 0 78px; background: radial-gradient(ellipse at 82% 20%, rgba(18,184,173,.20), transparent 35%), linear-gradient(135deg, #0d2542, #071426 68%); }
+.hero:after { content: ""; position: absolute; width: 360px; height: 360px; border: 1px solid rgba(98,227,213,.16); border-radius: 50%; right: -110px; top: 35px; box-shadow: 0 0 0 35px rgba(98,227,213,.025), 0 0 0 75px rgba(98,227,213,.02); opacity: var(--site-decoration-opacity); pointer-events: none; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 15px var(--accent); }
+h1 { max-width: 760px; margin: 20px 0; font-family: var(--site-font-heading); font-size: clamp(36px, calc(58px * var(--site-heading-scale)), 76px); line-height: 1.22; letter-spacing: -.04em; }
+.gradient { color: var(--accent); }
+.hero p { max-width: 650px; color: var(--muted); line-height: 1.9; font-size: 16px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.trust { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 42px; color: #c8d7e9; font-size: 13px; }
+.trust span:before { content: "✓"; color: var(--accent); font-weight: 900; margin-right: 8px; }
+section { padding: 82px 0; }
+.section-head { max-width: 650px; margin-bottom: 34px; }
+.kicker { color: var(--accent); font-size: 12px; font-weight: 900; letter-spacing: .12em; }
+h2 { margin: 10px 0 12px; font-size: clamp(27px, calc(38px * var(--site-heading-scale)), 48px); line-height: 1.3; }
+.section-head p, .muted { color: var(--muted); line-height: 1.85; }
+.services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.service { background: var(--surface); border: 1px solid var(--line); border-radius: calc(18px * var(--site-radius-scale)); padding: 24px; min-height: 230px; transition: transform .2s ease, border-color .2s ease; }
+.service:hover { transform: translateY(-4px); border-color: rgba(98,227,213,.55); }
+.service-icon { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 14px; background: rgba(18,184,173,.13); color: var(--accent); font-size: 22px; }
+.service h3 { margin: 20px 0 8px; font-size: 18px; }
+.service p { color: var(--muted); line-height: 1.75; font-size: 14px; }
+.service a { display: inline-block; color: var(--accent); font-size: 13px; font-weight: 800; margin-top: 8px; }
+.process { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.step { padding: 24px; border: 1px solid var(--line); border-radius: calc(16px * var(--site-radius-scale)); background: var(--surface-2); }
+.step-num { color: var(--accent); font-weight: 900; font-size: 13px; }
+.step h3 { margin: 12px 0 8px; }
+.step p { margin: 0; color: var(--muted); line-height: 1.8; font-size: 14px; }
+.order-layout { display: grid; grid-template-columns: .85fr 1.15fr; gap: 34px; align-items: start; }
+.order-note { background: linear-gradient(145deg, var(--site-primary), var(--surface)); padding: 28px; border-radius: calc(20px * var(--site-radius-scale)); border: 1px solid var(--line); }
+.order-note p { color: #d0deef; line-height: 1.9; }
+.form-card { background: var(--surface); border: 1px solid var(--line); border-radius: calc(20px * var(--site-radius-scale)); padding: 26px; }
+label { display: block; margin: 15px 0 7px; font-size: 13px; color: #dbe7f5; font-weight: 700; }
+input, select, textarea { width: 100%; padding: 13px 14px; border-radius: 11px; border: 1px solid var(--line); background: #08182b; color: var(--site-on-background); outline: none; }
+input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+textarea { min-height: 110px; resize: vertical; }
+.form-help { color: var(--muted); font-size: 12px; line-height: 1.7; margin-top: 12px; }
+#orderOutput { display: none; margin-top: 18px; padding: 16px; border-radius: 12px; border: 1px solid rgba(98,227,213,.35); background: rgba(18,184,173,.08); white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.8; }
+#orderOutput.show { display: block; }
+#copyBtn { margin-top: 12px; }
+.faq { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+details { padding: 18px 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+summary { cursor: pointer; font-weight: 800; }
+details p { color: var(--muted); line-height: 1.8; font-size: 14px; }
+footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: 13px; }
+.footer-row { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.notice { color: var(--warning); font-size: 12px; line-height: 1.7; margin-top: 14px; }
+@media (max-width: 850px) { .services { grid-template-columns: repeat(2, 1fr); } .order-layout { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .wrap { width: min(100% - 28px, 1120px); } .navlinks { display: none; } .nav .btn { padding: 10px 12px; font-size: 12px; } .hero { padding: 68px 0 62px; } section { padding: 62px 0; } .services, .steps, .faq { grid-template-columns: 1fr; } .service { min-height: 0; } .trust { gap: 12px; flex-direction: column; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *:before, *:after { transition: none !important; } }
+</style>
+</head>
+<body>
+<div id="app">
+<header><div class="wrap nav">
+  <a class="brand" href="#home" aria-label="NEXORA Digital Hub home"><span class="logo">N</span><span>NEXORA <span class="gradient">DIGITAL HUB</span></span></a>
+  <nav class="navlinks" aria-label="Main navigation"><a href="#services">ဝန်ဆောင်မှုများ</a><a href="#process">လုပ်ငန်းစဉ်</a><a href="#order">အော်ဒါမှာရန်</a><a href="#faq">မေးလေ့ရှိသည်များ</a></nav>
+  <a class="btn" href="#order">စုံစမ်းမေးမြန်းရန် ↗</a>
+</div></header>
+<main id="home">
+<section class="hero"><div class="wrap">
+  <div class="eyebrow"><span class="dot"></span> DIGITAL SERVICES · MYANMAR</div>
+  <h1>သင့်လုပ်ငန်းအတွက်<br><span class="gradient">Digital အကူအညီ</span> တစ်နေရာတည်းမှာ။</h1>
+  <p>NEXORA Digital Hub မှာ Social Media Design၊ Short Video၊ Website နဲ့ Telegram Bot ဝန်ဆောင်မှုတွေကို တစ်နေရာတည်းမှာ စုံစမ်းမှာယူနိုင်ပါတယ်။ သင့်လိုအပ်ချက်ကို ပြောပြပါ — သင့်တော်တဲ့အလုပ်အစီအစဉ်ကို အတူတူရွေးချယ်ကြမယ်။</p>
+  <div class="hero-actions"><a class="btn" href="#order">ဝန်ဆောင်မှုမှာယူရန် <span>→</span></a><a class="btn secondary" href="#services">ဝန်ဆောင်မှုကြည့်ရန်</a></div>
+  <div class="trust"><span>လိုအပ်ချက်အလိုက် ဈေးနှုန်းညှိနှိုင်း</span><span>အလုပ်မစခင် အတည်ပြုချက်ယူ</span><span>အဆင့်လိုက် ဆောင်ရွက်မှု</span></div>
+</div></section>
+<section id="services"><div class="wrap">
+  <div class="section-head"><div class="kicker">WHAT WE DO</div><h2>သင့်အတွက် ဘာတွေ လုပ်ပေးနိုင်လဲ?</h2><p>ပထမဆုံး စုံစမ်းမေးမြန်းပြီး လိုအပ်ချက်၊ အချိန်နဲ့ ဈေးနှုန်းကို သဘောတူညီပြီးမှ အလုပ်စတင်ပါမယ်။</p></div>
+  <div class="services">
+    <article class="service"><div class="service-icon">✦</div><h3>Social Media Design</h3><p>Facebook ပို့စ်၊ ကြော်ငြာပုံနဲ့ Promotion Design များ။</p><a href="#order" data-service="Social Media Design">ဒီဝန်ဆောင်မှုကို ရွေးရန် →</a></article>
+    <article class="service"><div class="service-icon">▶</div><h3>Short Video</h3><p>Reels၊ Shorts နဲ့ လုပ်ငန်းမိတ်ဆက်ဗီဒီယိုတိုများ။</p><a href="#order" data-service="Short Video">ဒီဝန်ဆောင်မှုကို ရွေးရန် →</a></article>
+    <article class="service"><div class="service-icon">⌘</div><h3>Website Design</h3><p>ကိုယ်ပိုင်လုပ်ငန်း၊ Portfolio နဲ့ ဝန်ဆောင်မှုမိတ်ဆက် Website များ။</p><a href="#order" data-service="Website Design">ဒီဝန်ဆောင်မှုကို ရွေးရန် →</a></article>
+    <article class="service"><div class="service-icon">✉</div><h3>Telegram Bot</h3><p>အော်ဒါလက်ခံခြင်း၊ FAQ နဲ့ အခြေခံလုပ်ငန်းစဉ်အလိုအလျောက်စနစ်များ။</p><a href="#order" data-service="Telegram Bot">ဒီဝန်ဆောင်မှုကို ရွေးရန် →</a></article>
+  </div>
+</div></section>
+<section class="process" id="process"><div class="wrap">
+  <div class="section-head"><div class="kicker">SIMPLE PROCESS</div><h2>အလုပ်လုပ်ပုံက ရိုးရှင်းပါတယ်။</h2><p>ရှင်းလင်းတဲ့ သဘောတူညီချက်နဲ့ အဆင့်လိုက် ဆောင်ရွက်ပါမယ်။</p></div>
+  <div class="steps">
+    <article class="step"><div class="step-num">STEP 01</div><h3>လိုအပ်ချက်ပြောပြပါ</h3><p>ဘာဝန်ဆောင်မှုလိုချင်သလဲ၊ ဘယ်လိုရလဒ်မျိုးလိုချင်သလဲ ပြောပြပါ။</p></article>
+    <article class="step"><div class="step-num">STEP 02</div><h3>ဈေးနှုန်းအတည်ပြုပါ</h3><p>အလုပ်အတိုင်းအတာ၊ ပေးပို့မည့်အချိန်နဲ့ ဈေးနှုန်းကို နှစ်ဖက်သဘောတူပါ။</p></article>
+    <article class="step"><div class="step-num">STEP 03</div><h3>အလုပ်လက်ခံရယူပါ</h3><p>သဘောတူထားတဲ့ အလုပ်ကို ဆောင်ရွက်ပြီး စစ်ဆေးအတည်ပြုကာ ပေးပို့ပါမယ်။</p></article>
+  </div>
+</div></section>
+<section id="order"><div class="wrap order-layout">
+  <div class="order-note"><div class="kicker">LET'S WORK TOGETHER</div><h2>သင့် Project ကို စတင်ဆွေးနွေးကြမယ်။</h2><p>အောက်က Form ကိုဖြည့်ပြီး မေးမြန်းလိုတဲ့အကြောင်းအရာကို စာသားအဖြစ် ပြင်ဆင်နိုင်ပါတယ်။ ဒီ Demo မှာ အချက်အလက်တွေကို Server ဆီ မပို့ပါဘူး။</p><p>အလုပ်အပ်နှံမှုမပြုမီ ဈေးနှုန်း၊ ပေးပို့မည့်အချိန်နဲ့ လုပ်ဆောင်နိုင်မှုကို အရင်အတည်ပြုပါ။</p><div class="notice">မှတ်ချက် — ဒီ Preview မှာ တကယ့် Customer အော်ဒါသိမ်းဆည်းမှု၊ ငွေပေးချေမှုနဲ့ တိုက်ရိုက်ဆက်သွယ်ရေး မချိတ်ဆက်ရသေးပါ။</div></div>
+  <div class="form-card"><h3>ဝန်ဆောင်မှု စုံစမ်းရန်</h3>
+    <form id="orderForm">
+      <label for="customer">အမည် (မဖြစ်မနေ မဟုတ်ပါ)</label><input id="customer" name="customer" autocomplete="name" placeholder="သင့်အမည်">
+      <label for="service">လိုချင်တဲ့ ဝန်ဆောင်မှု</label><select id="service" name="service" required><option value="">ရွေးချယ်ပါ</option><option>Social Media Design</option><option>Short Video</option><option>Website Design</option><option>Telegram Bot</option><option>အခြားစုံစမ်းမေးမြန်းမှု</option></select>
+      <label for="details">Project အကြောင်း</label><textarea id="details" name="details" required placeholder="ဘာလုပ်ချင်တာလဲ၊ ဘယ်အချိန်လိုချင်တာလဲ ရေးပေးပါ။"></textarea>
+      <label for="contact">ပြန်လည်ဆက်သွယ်ရန် နည်းလမ်း (မဖြစ်မနေ မဟုတ်ပါ)</label><input id="contact" name="contact" placeholder="ဥပမာ - Telegram username">
+      <button class="btn" type="submit" style="width:100%; margin-top:18px">မေးမြန်းစာ ပြင်ဆင်မယ် →</button>
+      <p class="form-help">အရေးကြီးသော ကိုယ်ရေးကိုယ်တာအချက်အလက်၊ စကားဝှက် သို့မဟုတ် ငွေပေးချေမှုအချက်အလက် မထည့်ပါနဲ့။</p>
+    </form>
+    <div id="orderOutput" aria-live="polite"></div>
+    <div id="shareActions" style="display:none; gap:10px; flex-wrap:wrap; margin-top:10px"><a id="telegramShare" class="btn secondary" target="_blank" rel="noopener noreferrer">Telegram မှ ပို့ရန် ↗</a><a id="messengerShare" class="btn secondary" target="_blank" rel="noopener noreferrer">Messenger မှ ပို့ရန် ↗</a><button id="copyBtn" class="btn secondary" type="button">အော်ဒါစာ ကူးယူရန်</button></div>
+    <p class="form-help">Telegram နှင့် Messenger လင့်ခ်များကို တကယ့် Admin အကောင့်သို့ ချိတ်ဆက်ရန် အကောင့်အမည်များ ထည့်သွင်းရပါမယ်။ မချိတ်ဆက်ရသေးမီ အော်ဒါစာကို ကူးယူပြီး ကိုယ်တိုင်ပို့နိုင်ပါတယ်။</p>
+  </div>
+</div></section>
+<section id="faq"><div class="wrap"><div class="section-head"><div class="kicker">FAQ</div><h2>မေးလေ့ရှိတဲ့ မေးခွန်းများ</h2></div>
+  <div class="faq">
+    <details><summary>ဈေးနှုန်း ဘယ်လောက်လဲ?</summary><p>အလုပ်အမျိုးအစားနဲ့ လိုအပ်ချက်ပေါ်မူတည်ပါတယ်။ အလုပ်အတိုင်းအတာကို နားလည်ပြီးမှ ဈေးနှုန်းကို အတည်ပြုပါမယ်။</p></details>
+    <details><summary>အလုပ်ကို ဘယ်လောက်ကြာမလဲ?</summary><p>အလုပ်အမျိုးအစားနဲ့ အတိုင်းအတာပေါ်မူတည်ပါတယ်။ စတင်မီ ခန့်မှန်းအချိန်ကို သဘောတူပါမယ်။</p></details>
+    <details><summary>အော်ဒါ Form က တကယ်ပို့ပေးသလား?</summary><p>ဒီ Preview မှာ အော်ဒါကို Server ဆီ မသိမ်းပါဘူး။ မေးမြန်းစာကို ပြင်ဆင်ပြီး Telegram သို့မဟုတ် WhatsApp မှာ ကိုယ်တိုင်မျှဝေနိုင်ပါတယ်။</p></details>
+    <details><summary>ငွေပေးချေမှုကို ဘယ်လိုလုပ်မလဲ?</summary><p>အလုပ်အမျိုးအစား၊ ဈေးနှုန်းနဲ့ ပေးချေမှုစည်းကမ်းကို အရင်သဘောတူပြီးမှ ဆောင်ရွက်သင့်ပါတယ်။ ဒီ Preview မှာ ငွေပေးချေမှု မချိတ်ဆက်ထားပါ။</p></details>
+  </div>
+</div></section>
+</main>
+<footer><div class="wrap footer-row"><div><strong>NEXORA DIGITAL HUB</strong><div style="margin-top:6px">Digital services, made clear and simple.</div></div><div>© <span id="year"></span> NEXORA Digital Hub · Preview version</div></div></footer>
+</div>
+<script>
+const form = document.getElementById('orderForm');
+const output = document.getElementById('orderOutput');
+const copyBtn = document.getElementById('copyBtn');
+// Replace these placeholders with the business account usernames before launch.
+const TELEGRAM_USERNAME = 'YOUR_TELEGRAM_USERNAME';
+const MESSENGER_PAGE_USERNAME = 'YOUR_FACEBOOK_PAGE_USERNAME';
+let orderText = '';
+document.getElementById('year').textContent = new Date().getFullYear();
+document.querySelectorAll('[data-service]').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('service').value = link.dataset.service;
+  });
+});
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  const data = new FormData(form);
+  orderText = [
+    'NEXORA DIGITAL HUB — SERVICE INQUIRY',
+    'အမည်: ' + (data.get('customer') || 'မဖော်ပြထားပါ'),
+    'ဝန်ဆောင်မှု: ' + data.get('service'),
+    'Project အကြောင်း: ' + data.get('details'),
+    'ဆက်သွယ်ရန်: ' + (data.get('contact') || 'မဖော်ပြထားပါ')
+  ].join('\n');
+  output.textContent = orderText + '\n\nမှတ်ချက်: ဒီစာသားကို ကူးယူပြီး ကိုယ်တိုင်ပေးပို့နိုင်ပါတယ်။';
+  output.classList.add('show');
+  const encodedMessage = encodeURIComponent(orderText);
+  const telegramLink = document.getElementById('telegramShare');
+  const messengerLink = document.getElementById('messengerShare');
+  telegramLink.href = TELEGRAM_USERNAME !== 'YOUR_TELEGRAM_USERNAME'
+    ? 'https://t.me/' + encodeURIComponent(TELEGRAM_USERNAME) + '?text=' + encodedMessage
+    : 'https://t.me/share/url?text=' + encodedMessage;
+  messengerLink.href = MESSENGER_PAGE_USERNAME !== 'YOUR_FACEBOOK_PAGE_USERNAME'
+    ? 'https://m.me/' + encodeURIComponent(MESSENGER_PAGE_USERNAME)
+    : 'https://www.messenger.com/';
+  messengerLink.onclick = () => {
+    if (MESSENGER_PAGE_USERNAME === 'YOUR_FACEBOOK_PAGE_USERNAME') {
+      alert('Messenger ချိတ်ဆက်ရန် MESSENGER_PAGE_USERNAME ကို သင့် Facebook Page username ဖြင့် အစားထိုးပါ။ အော်ဒါစာကို ကူးယူပြီး Chat ထဲတွင် ပို့ပါ။');
+    }
+  };
+  document.getElementById('shareActions').style.display = 'flex';
+});
+copyBtn.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(orderText);
+    copyBtn.textContent = 'ကူးယူပြီးပါပြီ ✓';
+  } catch (error) {
+    copyBtn.textContent = 'စာသားကို ဖိပြီး ရွေးကူးပါ';
+  }
+});
+</script>
+</body>
+</html>
